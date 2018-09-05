@@ -1,0 +1,107 @@
+<?php
+
+namespace DummyNamespace;
+
+use Tests\TestCase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\DummyModel;
+
+class DummyClass extends TestCase
+{
+    protected $endpoint = "/api/DummyApi";
+
+    /** @test */
+    public function a_user_can_create_a_DummyModel_record()
+    {
+        $obj = $this->testMakeADummyModelObject();
+        $this->json('POST', $this->endpoint, $obj, $this->header)
+            ->assertStatus(201)
+            ->assertJsonStructure(
+                $this->testAssertDataObject()
+            );
+    }
+
+    /** @test */
+    public function a_user_can_update_a_DummyModel_record()
+    {
+        $obj = $this->testCreateADummyModel($this->testMakeADummyModelObject());
+        $this->json('POST', $this->endpoint, $obj, $this->header)
+            ->assertStatus(200)
+            ->assertJsonStructure(
+                $this->testAssertDataObject()
+            );
+    }
+
+    /** @test */
+    public function a_user_can_delete_a_DummyModel_record()
+    {
+        $obj = $this->testCreateADummyModel($this->testMakeADummyModelObject());
+        $this->json('DELETE', $this->endpoint . '/' . $obj['id'], [], $this->header)
+            ->assertStatus(204);
+    }
+
+    /** @test */
+    public function a_user_can_view_DummyModel_records()
+    {
+        $assertData = $this->testAssertDataObject();
+        $assertData['data'] = [$assertData['data']];
+
+        $this->json('POST', $this->endpoint. '/fs', [], $this->header)
+            ->assertStatus(200)
+            ->assertJsonStructure(
+                $assertData
+            );
+    }
+
+    /** @test */
+    public function a_user_cannot_create_a_duplicate_DummyModel_record()
+    {
+        $obj = $this->testMakeADummyModelObject();
+
+        $this->json('POST', $this->endpoint, $obj, $this->header)
+            ->assertStatus(201);
+
+        $this->json('POST', $this->endpoint, $obj, $this->header)
+            ->assertStatus(400);
+    }
+
+     /** @test */
+     public function a_user_can_filter_records_of_DummyModel()
+     {
+        $filter = $this->testMakeFilterObject();
+        $this->json('POST', $this->endpoint . '/fs', $filter, $this->header)
+            ->assertStatus(200)
+            ->assertJson(["data" => [[]]]
+            );
+     }
+
+     public function testAssertDataObject()
+     {
+         return ['data' => ['id'dummyDataObject]];
+     }
+
+     public function testMakeADummyModelObject()
+     {
+         return [dummyModelObject];
+
+     }
+
+     /**
+      * @group ignore
+      */
+     public function testCreateADummyModel($obj)
+     {
+         return DummyModel::create($obj)->toArray();
+     }
+
+     public function testMakeFilterObject()
+     {
+         return [
+             "filters" => [
+                 ['filter_column' => "", 'filter_value' => ""],
+             ]
+         ];
+     }
+
+}

@@ -1,0 +1,24 @@
+<?php
+
+use Illuminate\Database\Seeder;
+use App\DummyModel;
+use Illuminate\Support\Facades\File;
+
+class DummyClass extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        DummyModel::truncate();
+        $json = File::get("database/data/DummyData.json");
+        $data = json_decode($json,true);
+        foreach ($data as $obj)
+        {
+           DummyModel::create($obj);
+        }
+    }
+}

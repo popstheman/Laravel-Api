@@ -1,0 +1,32 @@
+<?php
+
+namespace DummyNamespace;
+
+use NamespacedDummyModel;
+use Illuminate\Support\Facades\Auth;
+
+class DummyClass
+{
+   /**
+        * Handle the DocDummyModel "creating" event.
+        *
+        * @param  \NamespacedDummyModel  $dummyModel
+        * @return void
+        */
+       public function creating(DummyModel $dummyModel)
+       {
+           $dummyModel->created_by = Auth::guard('api')->user() ? Auth::guard('api')->user()->id : 1;
+       }
+
+       /**
+        * Handle the DocDummyModel "updating" event.
+        *
+        * @param  \NamespacedDummyModel  $dummyModel
+        * @return void
+        */
+       public function updating(DummyModel $dummyModel)
+       {
+           $dummyModel->updated_by = Auth::guard('api')->user() ? Auth::guard('api')->user()->id : 1;
+
+       }
+}

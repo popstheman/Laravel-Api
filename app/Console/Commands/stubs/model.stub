@@ -1,0 +1,23 @@
+<?php
+
+namespace DummyNamespace;
+
+use Illuminate\Database\Eloquent\Model;
+use App\BaseModel;
+
+
+class DummyClass extends BaseModel
+{
+
+    public $relationships = [];
+    protected $guarded = ['id','created_by','updated_by','created_at','updated_at'];
+    public function createdBy()
+    {
+        return $this->belongsTo('App\Login','created_by');
+    }
+
+    public function updatedBy()
+    {
+        return $this->belongsTo('App\Login', 'updated_by');
+    }
+}

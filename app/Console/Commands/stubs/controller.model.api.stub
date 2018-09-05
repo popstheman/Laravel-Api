@@ -1,0 +1,103 @@
+<?php
+
+namespace DummyNamespace;
+
+use DummyFullModelClass;
+use Illuminate\Http\Request;
+use DummyRootNamespaceHttp\Controllers\Controller;
+use App\Http\Resources\DummyModelClassResource;
+
+class DummyClass extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return DummyModelClassResource
+     */
+    public function store(Request $request)
+    {
+        $obj = DummyModelClass::updateOrCreate([
+            'id' => isset($request->id) ? $request->id != '' ? $request->id : 0 : 0
+        ], $request->except(['id']));
+
+        return new DummyModelClassResource($obj);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \DummyFullModelClass  $DummyModelVariable
+     * @return \Illuminate\Http\Response
+     */
+    public function show(DummyModelClass $DummyModelVariable)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \DummyFullModelClass  $DummyModelVariable
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, DummyModelClass $DummyModelVariable)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $obj = DummyModelClass::findorFail($id);
+        $obj->delete();
+
+        return response()->json(null, 204);
+    }
+
+    public function indexFS(Request $request)
+    {
+        $queryParent = $this->queryStructure();
+
+        $model = new DummyModelClass();
+
+        $relations = $model->relationships;
+
+        $queryParent = $this->makeFilterAndSortingQuery($request, $queryParent, $relations);
+
+        $pageSize = isset($request['page_size']) ? $request['page_size'] != '' ? $request['page_size'] : 0 : 0;
+        return DummyModelClassResource::collection($queryParent->paginate($pageSize));
+    }
+
+    public function bulk(Request $request)
+        {
+            $objects = $request['data'];
+            $data = [];
+            foreach ($objects as $obj) {
+                $data[] = $this->store(new Request($obj));
+            }
+            return ["data" => $data];
+        }
+
+
+    private function queryStructure()
+    {
+        return DummyModelClass::with('createdBy');
+    }
+}
