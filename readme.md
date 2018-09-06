@@ -1,25 +1,32 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+## About Laravel Api
 
-## About Laravel
+Hello everyone, I've created a boilerplate for those who wish to use Laravel to expose API's. This project has been setup to handle test cases, seeders, observers, controller, custom commands etc.. I'll talk about it in more details below. 
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+## Instructions
+Clone this project and run composer update to download all the packages used in this project.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Custom Commands
+I've created a few custom commands of my own to auto generate files which are needed to create a basic API.
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications.
+To make life easier, I've created a command make:psapi which will create ALL the necessary files at once.
+The above command will create the following files for you:
+
+1. Model
+2. Seeder
+3. Observer
+4. Feature Test
+5. Controller
+6. Resource
+7. Request
+
+Instruction on how to use the command:
+
+> php artisan make:psapi -m {model_name} -a {api_name} -c {columns}
+
+Example:
+> php artisan make:psapi -m User -a users -c string.first_name:string.last_name:string.email
+
 
 ## Learning Laravel
 
