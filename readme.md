@@ -115,4 +115,15 @@ To use the "foreign" type, you'll have to write foreign.column_name.relational_t
 5. Observer
 6. Controller
 
+The documentation of below sections to be completed soon.
+### Add Route
 
+### Seed Data
+
+### Feature Test
+
+### Model
+
+### Observer
+
+### Controller
