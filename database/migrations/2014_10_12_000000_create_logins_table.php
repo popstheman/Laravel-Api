@@ -24,6 +24,12 @@ class CreateLoginsTable extends Migration
             $table->integer('role_id')->unsigned();
             $table->integer('user_id')->unsigned();
 
+            $table->integer('created_by')->unsigned()->nullable();
+            $table->integer('updated_by')->unsigned()->nullable();
+
+            $table->foreign('created_by')->references('id')->on('logins');
+            $table->foreign('updated_by')->references('id')->on('logins');
+
             $table->rememberToken();
             $table->timestamps();
 

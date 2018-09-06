@@ -16,3 +16,10 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::apiResource('logins', 'LoginController');
+Route::post('logins/fs', 'LoginController@indexFS');
+Route::post('logins/many', 'LoginController@bulkRegister');
+Route::post('login', 'LoginController@login');
+Route::get('logout', "LoginController@logout");
+Route::get('refreshtoken', "LoginController@refreshToken");
+
